@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
-builder.services.Configure<ForwardedHeadersOptions>(options =>
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
     {
         options.ForwardedHeaders =
             ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
@@ -17,6 +17,18 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseForwardedHeaders();
+// Patch path base with forwarded path
+app.Use(async (context, next) =>
+{
+    var forwardedPath = context.Request.Headers["X-Forwarded-Path"].FirstOrDefault();
+    if (!string.IsNullOrEmpty(forwardedPath))
+    {
+        context.Request.PathBase = forwardedPath;
+    }
+
+    await next();
+});
+
 if (app.Environment.IsDevelopment())
 {
     app.UseWebAssemblyDebugging();
