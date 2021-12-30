@@ -1,8 +1,4 @@
-using System.Reflection;
-using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.OpenApi.Models;
-
-public class Startup
+public partial class Startup
 {
     public Startup(IConfiguration configuration)
     {
@@ -13,19 +9,7 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddControllersWithViews();
-        services.AddRazorPages();
-        services.Configure<ForwardedHeadersOptions>(options =>
-            {
-                options.ForwardedHeaders =
-                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-            });
-        services.AddSwaggerGen(options =>
-        {
-            options.SwaggerDoc("v1", new OpenApiInfo { Title = "My Plants Watering API", Version = "v1" });
-            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-        });
+        ConfigureWebServices(services);
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -33,16 +17,7 @@ public class Startup
         // Configure the HTTP request pipeline.
         app.UseForwardedHeaders();
         // Patch path base with forwarded path
-        app.Use(async (context, next) =>
-        {
-            var forwardedPath = context.Request.Headers["X-Forwarded-Path"].FirstOrDefault();
-            if (!string.IsNullOrEmpty(forwardedPath))
-            {
-                context.Request.PathBase = forwardedPath;
-            }
-
-            await next();
-        });
+        app.UseForwardPath();
 
         if (env.IsDevelopment())
         {
