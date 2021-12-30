@@ -1,4 +1,6 @@
+using System.Reflection;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.OpenApi.Models;
 
 public class Startup
 {
@@ -18,6 +20,12 @@ public class Startup
                 options.ForwardedHeaders =
                     ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
             });
+        services.AddSwaggerGen(options =>
+        {
+            options.SwaggerDoc("v1", new OpenApiInfo { Title = "My Plants Watering API", Version = "v1" });
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+        });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -46,6 +54,12 @@ public class Startup
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
+        app.UseSwagger();
+        app.UseSwaggerUI(c =>
+        {
+            // UI is accessible on the {HOST}/swagger/ route.
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Plants Watering API V1");
+        });
 
         app.UseHttpsRedirection();
 
@@ -53,6 +67,7 @@ public class Startup
         app.UseStaticFiles();
 
         app.UseRouting();
+        
 
         app.UseEndpoints(endpoints =>
         {
