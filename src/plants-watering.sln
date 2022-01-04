@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "plants-watering.Server", "Server\plants-watering.Server.csproj", "{B8C2D7FC-C92C-426A-B228-524EF9C1261F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantsWatering.Server", "Server\PlantsWatering.Server.csproj", "{B8C2D7FC-C92C-426A-B228-524EF9C1261F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "plants-watering.Client", "Client\plants-watering.Client.csproj", "{E9824293-6215-46FA-A72F-5652DD9A3777}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantsWatering.Client", "Client\PlantsWatering.Client.csproj", "{E9824293-6215-46FA-A72F-5652DD9A3777}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "plants-watering.Shared", "Shared\plants-watering.Shared.csproj", "{A6B77664-878D-4182-8F51-A9F0AFF9937E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantsWatering.Shared", "Shared\PlantsWatering.Shared.csproj", "{A6B77664-878D-4182-8F51-A9F0AFF9937E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

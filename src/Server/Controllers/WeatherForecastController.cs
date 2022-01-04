@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using plants_watering.Shared;
+using PlantsWatering.Shared.Dtos;
 
-namespace plants_watering.Server.Controllers
+namespace PlantsWatering.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -20,9 +20,9 @@ namespace plants_watering.Server.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<WeatherForecastDto> Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecastDto
             {
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = Random.Shared.Next(-20, 55),

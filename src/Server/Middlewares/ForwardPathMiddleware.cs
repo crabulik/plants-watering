@@ -15,6 +15,10 @@ public class ForwardPathMiddleware
         {
             context.Request.PathBase = forwardedPath;
         }
+        else
+        {
+            context.Request.PathBase = "/";
+        }
 
         await _next(context);
     }

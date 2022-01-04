@@ -1,6 +1,6 @@
-namespace plants_watering.Shared
+namespace PlantsWatering.Shared.Dtos
 {
-    public class WeatherForecast
+    public class WeatherForecastDto
     {
         public DateTime Date { get; set; }
 

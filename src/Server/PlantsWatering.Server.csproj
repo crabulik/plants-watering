@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>plants-watering.Server</RootNamespace>
+    <RootNamespace>PlantsWatering.Server</RootNamespace>
     <AssemblyName>$(AssemblyName.Replace(' ', '_'))</AssemblyName>
   </PropertyGroup>
 
@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Client\plants-watering.Client.csproj" />
-    <ProjectReference Include="..\Shared\plants-watering.Shared.csproj" />
+    <ProjectReference Include="..\Client\PlantsWatering.Client.csproj" />
+    <ProjectReference Include="..\Shared\PlantsWatering.Shared.csproj" />
   </ItemGroup>
 
 

@@ -1,5 +1,5 @@
 ﻿@page "/fetchdata"
-@using plants_watering.Shared
+@using PlantsWatering.Shared.Dtos
 @inject HttpClient Http
 
 <PageTitle>Weather forecast</PageTitle>
@@ -38,10 +38,10 @@ else
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    private WeatherForecastDto[]? forecasts;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        forecasts = await Http.GetFromJsonAsync<WeatherForecastDto[]>("WeatherForecast");
     }
 }
