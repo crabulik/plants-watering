@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using PlantsWatering.Server.Db;
+
 public partial class Startup
 {
     public Startup(IConfiguration configuration)
@@ -9,7 +12,9 @@ public partial class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        ConfigureSystemServices(services);
         ConfigureWebServices(services);
+        ConfigureSettings(services);
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -22,6 +27,8 @@ public partial class Startup
         if (env.IsDevelopment())
         {
             app.UseWebAssemblyDebugging();
+            app.UseDeveloperExceptionPage();
+            app.UseMigrationsEndPoint();
         }
         else
         {
@@ -29,6 +36,8 @@ public partial class Startup
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
+        InitialiseDb(app);
+
         app.UseSwagger();
         app.UseSwaggerUI(c =>
         {
@@ -51,5 +60,16 @@ public partial class Startup
             endpoints.MapFallbackToFile("index.html");
         });
            
+    }
+
+    private void InitialiseDb(IApplicationBuilder app)
+    {
+        using (var scope = app.ApplicationServices.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+
+            var context = services.GetRequiredService<PlantsDbContext>();
+            context.Database.Migrate();
+        }
     }
 }

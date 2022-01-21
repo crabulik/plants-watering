@@ -1,6 +1,10 @@
 using System.Reflection;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using PlantsWatering.Server.Db;
+using PlantsWatering.Server.Extensions;
+using PlantsWatering.Server.Settings;
 
 public partial class Startup
 {
@@ -20,5 +24,17 @@ public partial class Startup
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         });
+    }
+
+    private void ConfigureSystemServices(IServiceCollection services)
+    {
+        services.AddDbContext<PlantsDbContext>(options =>
+            options.UseSqlite(Configuration.GetConnectionString(nameof(PlantsDbContext))));
+        services.AddDatabaseDeveloperPageExceptionFilter();
+    }
+
+    private void ConfigureSettings(IServiceCollection services)
+    {
+        services.ConfigureSettings<ChannelsSettings>(Configuration);
     }
 }
