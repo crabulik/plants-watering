@@ -14,6 +14,7 @@ public partial class Startup
     {
         ConfigureSystemServices(services);
         ConfigureWebServices(services);
+        ConfigureApplicationServices(services);
         ConfigureSettings(services);
     }
 

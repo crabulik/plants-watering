@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using PlantsWatering.Server.Db;
 using PlantsWatering.Server.Extensions;
+using PlantsWatering.Server.Features.Channels;
+using PlantsWatering.Server.Services.Repositories;
 using PlantsWatering.Server.Settings;
 
 public partial class Startup
@@ -31,6 +33,17 @@ public partial class Startup
         services.AddDbContext<PlantsDbContext>(options =>
             options.UseSqlite(Configuration.GetConnectionString(nameof(PlantsDbContext))));
         services.AddDatabaseDeveloperPageExceptionFilter();
+
+        services.AddAutoMapper(typeof(Startup));
+    }
+
+    private void ConfigureApplicationServices(IServiceCollection services)
+    {
+        services.AddScoped<IChannelsRepository, ChannelsRepository>();
+        
+        
+        services.AddScoped<IGetAvailableCommunicationChannelsFeature,
+            GetAvailableCommunicationChannelsFeature>();
     }
 
     private void ConfigureSettings(IServiceCollection services)

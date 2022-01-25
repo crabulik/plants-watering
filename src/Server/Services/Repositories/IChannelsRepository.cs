@@ -2,6 +2,6 @@
 {
     public interface IChannelsRepository
     {
-        public Task<CommunicationChannel[]> GetUnusedChannels();
+        public Task<CommunicationChannel[]> GetUnusedChannelsAsync();
     }
 }

@@ -4,7 +4,7 @@
     {
         public static IServiceCollection ConfigureSettings<TOptions>(this IServiceCollection services, IConfiguration configuration) where TOptions : class
         {
-            return services.Configure<TOptions>(configuration.GetSection(nameof(TOptions)));
+            return services.Configure<TOptions>(configuration.GetSection(typeof(TOptions).Name));
         }
     }
 }

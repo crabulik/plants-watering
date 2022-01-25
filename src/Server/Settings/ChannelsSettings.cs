@@ -7,8 +7,8 @@
 
     public class ConfiguredCommunicationChannel
     {
-        public string Id { get; private set; } = string.Empty;
+        public string Id { get; set; } = string.Empty;
 
-        public string Name { get; private set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
     }
 }

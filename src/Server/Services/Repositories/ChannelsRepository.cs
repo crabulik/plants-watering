@@ -20,7 +20,7 @@ namespace PlantsWatering.Server.Services.Repositories
             _settings = settings.Value;
         }
 
-        public async Task<CommunicationChannel[]> GetUnusedChannels()
+        public async Task<CommunicationChannel[]> GetUnusedChannelsAsync()
         {
             var usedChannelsIds = await _plantsDbContext.Plants
                 .Select(p => p.CommunicationChannelId)
