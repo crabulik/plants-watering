@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Models;
 using PlantsWatering.Server.Db;
 using PlantsWatering.Server.Extensions;
 using PlantsWatering.Server.Features.Channels;
+using PlantsWatering.Server.Services.Mappers;
 using PlantsWatering.Server.Services.Repositories;
 using PlantsWatering.Server.Settings;
 
@@ -40,8 +41,9 @@ public partial class Startup
     private void ConfigureApplicationServices(IServiceCollection services)
     {
         services.AddScoped<IChannelsRepository, ChannelsRepository>();
-        
-        
+        services.AddScoped<IPlantsRepository, PlantsRepository>();
+        services.AddScoped<IDboMapper, DboMapper>();
+
         services.AddScoped<IGetAvailableCommunicationChannelsFeature,
             GetAvailableCommunicationChannelsFeature>();
     }

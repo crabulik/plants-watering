@@ -16,7 +16,14 @@ namespace PlantsWatering.Server.Db
         {
             modelBuilder
                 .Entity<PlantDbo>()
-                .ToTable("Plants");
+                .ToTable("Plants")
+                .OwnsOne(
+                    p => p.WateringSchedule,
+                    od =>
+                    {
+                        od.Property(p => p.Type)
+                            .HasConversion<string>();
+                    });
         }
     }
 }

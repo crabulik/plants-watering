@@ -14,5 +14,7 @@ namespace PlantsWatering.Server.Db.Models
 
         [MaxLength(20)]
         public string CommunicationChannelId { get; set; } = string.Empty;
+
+        public WateringScheduleDbo WateringSchedule { get; set; } = new();
     }
 }

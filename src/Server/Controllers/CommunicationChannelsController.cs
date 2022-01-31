@@ -17,9 +17,9 @@ namespace PlantsWatering.Server.Controllers
 
         [HttpGet("available")]
         [Produces(typeof(CommunicationChannelDto[]))]
-        public async Task<CommunicationChannelDto[]> GetAvailable()
+        public async Task<ActionResult<CommunicationChannelDto[]>> GetAvailable()
         {
-            return await _getAvailableCommunicationChannelsFeature.HandleAsync();
+            return Ok(await _getAvailableCommunicationChannelsFeature.HandleAsync());
         }
     }
 }
