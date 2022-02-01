@@ -16,5 +16,7 @@ namespace PlantsWatering.Server.Db.Models
         public string CommunicationChannelId { get; set; } = string.Empty;
 
         public WateringScheduleDbo WateringSchedule { get; set; } = new();
+
+        public bool IsDeleted { get; set; } = false;
     }
 }

@@ -59,5 +59,43 @@ namespace PlantsWatering.Server.Services.Mappers
                     communicationChannel
                 );
         }
+
+        public PlantDbo MapPlant(Plant plant)
+        {
+            var schedule = plant.WateringSchedule switch
+            {
+                NotSetWateringSchedule p => new WateringScheduleDbo
+                {
+                    Type = WateringScheduleTypeDbo.NotSet,
+                    Rate = null,
+                    WateringHour = null,
+                    WateringMinute = null
+                },
+                HourlyWateringSchedule p => new WateringScheduleDbo
+                {
+                    Type = WateringScheduleTypeDbo.Hourly,
+                    Rate = p.Rate,
+                    WateringHour = null,
+                    WateringMinute = null
+                },
+                DailyWateringSchedule p => new WateringScheduleDbo
+                {
+                    Type = WateringScheduleTypeDbo.Daily,
+                    Rate = null,
+                    WateringHour = p.WateringHour,
+                    WateringMinute = p.WateringMinute
+                },
+                _ => throw new DomainInitialisationException($"The WateringSchedule type {plant.WateringSchedule.GetType().Name} has no implemented mapping in {nameof(DboMapper)}")
+            };
+
+            return new PlantDbo
+            {
+                Id = plant.Id,
+                Name = plant.Name,
+                Location = plant.Location,
+                CommunicationChannelId = plant.CommunicationChannel.Id,
+                WateringSchedule = schedule
+            };
+        }
     }
 }

@@ -32,5 +32,11 @@ namespace PlantsWatering.Server.Services.Repositories
                 .Select(p => new CommunicationChannel(p.Id, p.Name))
                 .ToArray();
         }
+
+        public async Task<bool> GetIsChannelUnusedAsync(string communicationChannelId)
+        {
+            return await _plantsDbContext.Plants
+                    .AnyAsync(p => p.CommunicationChannelId == communicationChannelId);
+        }
     }
 }

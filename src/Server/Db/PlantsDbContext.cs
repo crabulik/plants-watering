@@ -23,7 +23,9 @@ namespace PlantsWatering.Server.Db
                     {
                         od.Property(p => p.Type)
                             .HasConversion<string>();
-                    });
+                    })
+                .HasIndex(i => new { i.CommunicationChannelId })
+                    .IsUnique(true);
         }
     }
 }
