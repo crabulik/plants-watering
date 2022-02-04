@@ -11,15 +11,18 @@ namespace PlantsWatering.Server.Features.Channels
 
         public GetAvailableCommunicationChannelsFeature(IChannelsRepository channelsRepository, IMapper mapper)
         {
-            _channelsRepository = channelsRepository;
-            _mapper = mapper;
+            _channelsRepository = channelsRepository ?? throw new ArgumentNullException(nameof(channelsRepository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<CommunicationChannelDto[]> HandleAsync()
+        public async Task<GetAvailableCommunicationChannelsResponceDto> HandleAsync()
         {
             var unusedChannels = await _channelsRepository.GetUnusedChannelsAsync();
 
-            return _mapper.Map<CommunicationChannelDto[]>(unusedChannels);  
+            return new GetAvailableCommunicationChannelsResponceDto
+            {
+                CommunicationChannels = _mapper.Map<CommunicationChannelDto[]>(unusedChannels)
+            };
         }
     }
 }

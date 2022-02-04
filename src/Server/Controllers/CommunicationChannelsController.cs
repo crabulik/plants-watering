@@ -6,20 +6,16 @@ namespace PlantsWatering.Server.Controllers
 {
     [ApiController]
     [Route("api/communication-channels")]
+    [Produces("application/json")]
+    [Consumes("application/json")]
     public class CommunicationChannelsController : ControllerBase
     { 
-        private readonly IGetAvailableCommunicationChannelsFeature _getAvailableCommunicationChannelsFeature;
-
-        public CommunicationChannelsController(IGetAvailableCommunicationChannelsFeature getAvailableCommunicationChannelsFeature)
-        {
-            _getAvailableCommunicationChannelsFeature = getAvailableCommunicationChannelsFeature;
-        }
-
         [HttpGet("available")]
-        [Produces(typeof(CommunicationChannelDto[]))]
-        public async Task<ActionResult<CommunicationChannelDto[]>> GetAvailable()
+        [Produces(typeof(GetAvailableCommunicationChannelsResponceDto))]
+        public async Task<ActionResult<GetAvailableCommunicationChannelsResponceDto>> GetAvailable(
+            [FromServices]IGetAvailableCommunicationChannelsFeature getAvailableCommunicationChannelsFeature)
         {
-            return Ok(await _getAvailableCommunicationChannelsFeature.HandleAsync());
+            return Ok(await getAvailableCommunicationChannelsFeature.HandleAsync());
         }
     }
 }

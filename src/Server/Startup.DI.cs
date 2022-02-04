@@ -1,10 +1,12 @@
 using System.Reflection;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using PlantsWatering.Server.Db;
 using PlantsWatering.Server.Extensions;
 using PlantsWatering.Server.Features.Channels;
+using PlantsWatering.Server.Features.Plants;
 using PlantsWatering.Server.Services.Mappers;
 using PlantsWatering.Server.Services.Repositories;
 using PlantsWatering.Server.Settings;
@@ -27,6 +29,7 @@ public partial class Startup
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         });
+        services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
     }
 
     private void ConfigureSystemServices(IServiceCollection services)
@@ -46,6 +49,8 @@ public partial class Startup
 
         services.AddScoped<IGetAvailableCommunicationChannelsFeature,
             GetAvailableCommunicationChannelsFeature>();
+        services.AddScoped<IGetAllPlantsFeature,
+            GetAllPlantsFeature>();
     }
 
     private void ConfigureSettings(IServiceCollection services)
