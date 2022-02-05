@@ -7,12 +7,11 @@ namespace PlantsWatering.Server.Controllers
     [ApiController]
     [Route("api/plants")]
     [Produces("application/json")]
-    [Consumes("application/json")]
     public class PlantsController : ControllerBase
     {
         // GET: api/plants
         [HttpGet]
-        [Produces(typeof(GetAllPlantsResponceDto))]
+        [ProducesResponseType(typeof(GetAllPlantsResponceDto), 200)]
         public async Task<ActionResult<GetAllPlantsResponceDto>> Get(
             [FromServices] IGetAllPlantsFeature getAllPlantsFeature)
         {

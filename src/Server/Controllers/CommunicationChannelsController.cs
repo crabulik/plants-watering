@@ -7,11 +7,10 @@ namespace PlantsWatering.Server.Controllers
     [ApiController]
     [Route("api/communication-channels")]
     [Produces("application/json")]
-    [Consumes("application/json")]
     public class CommunicationChannelsController : ControllerBase
     { 
         [HttpGet("available")]
-        [Produces(typeof(GetAvailableCommunicationChannelsResponceDto))]
+        [ProducesResponseType(typeof(GetAvailableCommunicationChannelsResponceDto), 200)]
         public async Task<ActionResult<GetAvailableCommunicationChannelsResponceDto>> GetAvailable(
             [FromServices]IGetAvailableCommunicationChannelsFeature getAvailableCommunicationChannelsFeature)
         {

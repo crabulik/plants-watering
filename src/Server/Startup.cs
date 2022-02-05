@@ -29,7 +29,6 @@ public partial class Startup
         {
             app.UseWebAssemblyDebugging();
             app.UseDeveloperExceptionPage();
-            app.UseMigrationsEndPoint();
         }
         else
         {
@@ -50,7 +49,7 @@ public partial class Startup
 
         app.UseBlazorFrameworkFiles();
         app.UseStaticFiles();
-
+        
         app.UseRouting();
         
 
@@ -60,7 +59,7 @@ public partial class Startup
             endpoints.MapControllers();
             endpoints.MapFallbackToFile("index.html");
         });
-           
+         
     }
 
     private void InitialiseDb(IApplicationBuilder app)

@@ -4,7 +4,8 @@ using PlantsWatering.Shared.Dtos;
 namespace PlantsWatering.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/weather-forecast")]
+    [Produces("application/json")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -20,15 +21,16 @@ namespace PlantsWatering.Server.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecastDto> Get()
+        [ProducesResponseType(typeof(WeatherForecastDto[]), 200)]
+        public ActionResult<WeatherForecastDto[]> Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecastDto
+            return Ok(Enumerable.Range(1, 5).Select(index => new WeatherForecastDto
             {
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = Random.Shared.Next(-20, 55),
                 Summary = Summaries[Random.Shared.Next(Summaries.Length)]
             })
-            .ToArray();
+            .ToArray());
         }
     }
 }
