@@ -1,7 +1,8 @@
+using PlantsWatering.Server.Exceptions.Server;
 using System.Runtime.Serialization;
 
 [Serializable]
-public class DomainInitialisationException : Exception
+public class DomainInitialisationException : InternalErrorException
 {
     public DomainInitialisationException()
     {

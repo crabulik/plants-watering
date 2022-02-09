@@ -131,5 +131,13 @@ namespace PlantsWatering.Server.Services.Repositories
             await _plantsDbContext.SaveChangesAsync();
             return true;
         }
+
+        public async Task<bool> CheckPlantIsAvailiableByIdAsync(int plantId)
+        {
+            return await _plantsDbContext
+                .Plants
+                .AsNoTracking()
+                .AnyAsync(p => p.Id == plantId);
+        }
     }
 }

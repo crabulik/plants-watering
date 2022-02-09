@@ -30,7 +30,11 @@ public partial class Startup
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         });
-        services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+        services.AddFluentValidation(fv =>
+        {
+            fv.RegisterValidatorsFromAssemblyContaining<Startup>();
+            fv.AutomaticValidationEnabled = false;
+        });
     }
 
     private void ConfigureSystemServices(IServiceCollection services)
@@ -52,6 +56,8 @@ public partial class Startup
             GetAvailableCommunicationChannelsFeature>();
         services.AddScoped<IGetAllPlantsFeature,
             GetAllPlantsFeature>();
+        services.AddScoped<IGetPlantByIdFeature,
+            GetPlantByIdFeature>();
     }
 
     private void ConfigureSettings(IServiceCollection services)

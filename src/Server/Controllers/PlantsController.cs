@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
 using PlantsWatering.Server.Features.Plants;
+using PlantsWatering.Server.Validators;
 using PlantsWatering.Shared.Dtos.Plants;
 
 namespace PlantsWatering.Server.Controllers
@@ -13,17 +16,37 @@ namespace PlantsWatering.Server.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(GetAllPlantsResponceDto), 200)]
         public async Task<ActionResult<GetAllPlantsResponceDto>> Get(
-            [FromServices] IGetAllPlantsFeature getAllPlantsFeature)
+            [FromServices] IGetAllPlantsFeature feature)
         {
-            return Ok(await getAllPlantsFeature.HandleAsync());
+            return Ok(await feature.HandleAsync());
         }
 
         // GET api/plants/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PlantDto>> Get([FromRoute]GetPlantByIdRequestDto request)
+        public async Task<ActionResult<PlantDto>> Get(int id,
+            [FromServices] IGetPlantByIdFeature feature)
         {
-
-            return Ok(new PlantDto());
+            var model = new GetPlantByIdRequestDto
+            {
+                Id = id
+            };
+            var result = await feature.ValidateAsync(model);
+            if(result.IsValid)
+            {
+                return Ok(await feature.HandleAsync(model));
+            } 
+            else
+            {
+                if (result.Errors.Exists(p => string.Equals(p.ErrorCode, ValidationErrorCodes.NotFoundEntity)))
+                {
+                    return NotFound();
+                } 
+                else
+                {
+                    result.AddToModelState(ModelState, null);
+                    return BadRequest(ModelState);
+                }
+            }
         }
 
         // POST api/<PlantsController>
